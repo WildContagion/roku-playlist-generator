@@ -18,10 +18,10 @@ class RokuChannelExtractor:
     
     def __init__(self):
         # API endpoints
-        self.api_url = 'https://therokuchannel.roku.com/api/v2/homescreen/content/'
-        self.playback_url = 'https://therokuchannel.roku.com/api/v3/playback'
-        self.epg_url = 'https://therokuchannel.roku.com/api/v2/epg'
-        self.csrf_url = 'https://therokuchannel.roku.com/api/v1/csrf'
+        self.api_url = 'https://app.roku.com/api/v2/homescreen/content/'
+        self.playback_url = 'https://app.roku.com/api/v3/playback'
+        self.epg_url = 'https://app.roku.com/api/v2/epg'
+        self.csrf_url = 'https://app.roku.com/api/v1/csrf'
         self.base_url = "https://content.sr.roku.com/content/v1/roku-trc/"
         
         # Setup session with headers
@@ -63,7 +63,7 @@ class RokuChannelExtractor:
                 
                 # Ensure we have a referer
                 if 'Referer' not in kwargs['headers'] and 'referer' not in kwargs['headers']:
-                    kwargs['headers']['Referer'] = 'https://therokuchannel.roku.com/'
+                    kwargs['headers']['Referer'] = 'https://app.roku.com/'
                 
                 # Make the request
                 response = self.session.request(method, url, **kwargs)
@@ -148,8 +148,8 @@ class RokuChannelExtractor:
         content_url = f"{self.api_url}{encoded_base}{channel_id}?expand={double_encoded_params}"
         
         headers = {
-            'Referer': f'https://therokuchannel.roku.com/watch/{channel_id}',
-            'Origin': 'https://therokuchannel.roku.com',
+            'Referer': f'https://app.roku.com/watch/{channel_id}',
+            'Origin': 'https://app.roku.com',
         }
         
         response = self._make_request('GET', content_url, headers=headers)
@@ -179,8 +179,8 @@ class RokuChannelExtractor:
         }
         
         headers = {
-            'Referer': f'https://therokuchannel.roku.com/watch/{channel_id}',
-            'Origin': 'https://therokuchannel.roku.com',
+            'Referer': f'https://app.roku.com/watch/{channel_id}',
+            'Origin': 'https://app.roku.com',
             'Content-Type': 'application/json',
             'Accept': 'application/json, text/plain, */*',
             'csrf-token': csrf_token
